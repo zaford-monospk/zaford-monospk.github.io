@@ -122,12 +122,39 @@
             background: var(--accent-color);
         }
 
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 80px;
-            align-items: center;
-        }
+        /* 부모 컨테이너를 기준으로 잡음 */
+.about-grid {
+    position: relative; /* 자식 요소들의 기준점 */
+    overflow: hidden;   /* 이미지가 튀어나가지 않게 */
+    padding: 40px;      /* 텍스트 여백 확보 */
+    /* 기존 grid 설정이 있다면 유지하거나 상황에 따라 display: block으로 변경 고려 */
+}
+
+/* 이미지를 배경으로 배치 */
+.about-img {
+    position: absolute; /* 둥둥 띄움 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 정중앙 배치 */
+    width: 100%;        /* 혹은 300px 등 원하는 크기로 고정 가능 */
+    max-width: 500px;   /* 너무 커지지 않게 제한 */
+    z-index: 0;         /* 가장 뒤로 보냄 */
+    opacity: 0.5;       /* ★중요: 투명도를 낮춰서 글자가 잘 보이게 함 */
+    pointer-events: none; /* 마우스 클릭이 글자에 방해되지 않게 함 */
+}
+
+/* 이미지가 부모(.about-img) 크기에 맞춰지도록 */
+.about-visual-image {
+    width: 100%;
+    height: auto;
+}
+
+/* 텍스트를 앞으로 가져옴 */
+.about-text {
+    position: relative; /* z-index 적용을 위해 필요 */
+    z-index: 1;         /* 이미지보다 위에 배치 */
+    text-align: center; /* 텍스트 중앙 정렬 (선택사항) */
+}
 
         .about-text h3 { 
             font-size: 2rem; 
