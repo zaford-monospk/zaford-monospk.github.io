@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MONOSPARK - Creative Game Studio</title>
     <style>
+        /* Contact 섹션이 짧더라도 하단에서 충분히 활성화될 수 있도록 최소 높이 확보 */
+#contact {
+    min-height: 80vh; /* 뷰포트 높이의 80% 만큼 최소 높이를 부여 */
+}
         /* --- Reset & Base Styles --- */
         :root {
             --bg-color: #050505; /* 더 깊은 어둠 */
@@ -55,7 +59,13 @@
         nav ul { display: flex; gap: 40px; }
         nav a { font-size: 13px; font-weight: 600; color: var(--gray-text); text-transform: uppercase; letter-spacing: 1.5px; }
         nav a:hover { color: var(--accent-color); }
-
+            /* 현재 활성화된 메뉴 항목 스타일 추가 */
+        nav a.active {
+            color: var(--accent-color);
+            font-weight: 700; /* 활성화 시 더 강조 */
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px; /* 밑줄을 위한 여백 */
+        }
         /* --- Hero Section --- */
         .hero {
             height: 100vh;
@@ -121,6 +131,48 @@
             height: 2px;
             background: var(--accent-color);
         }
+        /* --- Email Copyable Style --- */
+.copyable-email {
+    color: var(--accent-color); /* 기본 색상을 강조색으로 설정 */
+    font-weight: bold; /* 강조 */
+    cursor: copy; /* 복사 가능함을 나타내는 커서 */
+    transition: 0.3s;
+    /* 호버 시 버튼처럼 색상 반전 효과를 위한 준비 */
+    padding: 2px 5px; /* 호버 영역을 명확히 하기 위해 약간의 패딩 추가 */
+    display: inline-block; /* 패딩 적용을 위해 필요 */
+    border-bottom: 1px solid transparent; /* 밑줄 효과를 부드럽게 추가 */
+}
+
+.copyable-email:hover {
+    color: #000; /* 호버 시 텍스트 색상을 어둡게 */
+    background: var(--accent-color); /* 배경색을 강조색으로 변경 */
+    border-bottom-color: var(--accent-color); /* 밑줄도 강조색으로 */
+}
+
+/* --- Toast Notification Style --- */
+.toast-message {
+    visibility: hidden; /* 기본적으로 숨김 */
+    min-width: 250px;
+    background-color: var(--accent-color);
+    color: #000;
+    text-align: center;
+    border-radius: 4px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1001;
+    left: 50%;
+    bottom: 50px;
+    transform: translateX(-50%);
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.5s, visibility 0.5s;
+}
+
+.toast-message.show {
+    visibility: visible;
+    opacity: 1;
+}
 
         /* 부모 컨테이너를 기준으로 잡음 */
 .about-grid {
@@ -359,14 +411,8 @@
                 <h4>Let's spark something together.</h4>
                 <p>협업 제안이나 게임에 대한 피드백은 언제나 환영합니다.</p>
                 <br>
-                <p><strong>Email:</strong> zaford@monospk.com</p>
+                <p><strong>Email:</strong> <span id="emailToCopy" class="copyable-email">zaford@monospk.com</span></p>
                 <p><strong>Location:</strong> GoYang-Si ,Republic of Korea</p>
-            </div>
-            <div class="contact-form">
-                <input type="text" placeholder="Your Name">
-                <input type="email" placeholder="Your Email">
-                <textarea rows="5" placeholder="Tell us about your idea"></textarea>
-                <button>Send Message</button>
             </div>
         </div>
     </section>
@@ -402,6 +448,84 @@
             el.style.transition = 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)';
             observer.observe(el);
         });
+
+        /* --- Email Copy & Toast Functionality --- */
+
+        // 1. Toast 알림 메시지 HTML을 body에 추가합니다.
+        document.body.insertAdjacentHTML('beforeend', '<div id="copyToast" class="toast-message">이메일 주소가 복사되었습니다!</div>');
+
+        const emailElement = document.getElementById('emailToCopy');
+        const toastElement = document.getElementById('copyToast');
+
+        // 2. 복사 기능 함수
+        function copyTextToClipboard(text) {
+            if (!navigator.clipboard) {
+                // 구형 브라우저를 위한 대체 방법 (사용하지 않음)
+                return;
+            }
+            navigator.clipboard.writeText(text).then(() => {
+                showToast();
+            }).catch(err => {
+                console.error('클립보드 복사 실패: ', err);
+            });
+        }
+
+        // 3. Toast 메시지 표시 함수
+        function showToast() {
+            // 'show' 클래스를 추가하여 보이게 합니다.
+            toastElement.classList.add('show');
+            
+            // 3초 후 'show' 클래스를 제거하여 사라지게 합니다.
+            setTimeout(() => {
+                toastElement.classList.remove('show');
+            }, 3000);
+        }
+
+        // 4. 이메일 요소에 클릭 이벤트 리스너를 추가합니다.
+        if (emailElement) {
+            emailElement.addEventListener('click', function() {
+                const email = this.textContent;
+                copyTextToClipboard(email);
+            });
+        }
+      /* --- Section Intersection Observer for Navigation Highlight --- */
+
+// 1. 모든 섹션과 네비게이션 링크를 가져옵니다.
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('header nav ul li a');
+
+// 2. Observer 설정 (rootMargin: 뷰포트의 상단에서 20% 지점에 교차점이 발생하도록 설정)
+const observerOptions = {
+    root: null, // 뷰포트를 기준으로 관찰
+    rootMargin: '0px 0px -80% 0px', // 뷰포트 상단에서 20% 지점 (헤더 크기를 고려하여 하단 마진을 80%로 설정)
+    threshold: 0.1 // 섹션의 10%만 보여도 감지 시작
+};
+
+// 3. Observer 콜백 함수 정의
+const sectionObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            // 현재 활성화된 섹션의 ID (예: #about)
+            const currentSectionId = entry.target.id;
+
+            // 모든 링크에서 'active' 클래스 제거
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // 현재 섹션에 해당하는 링크에만 'active' 클래스 추가
+            const activeLink = document.querySelector(`header nav ul li a[href="#${currentSectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    });
+}, observerOptions);
+
+// 4. 모든 섹션을 관찰 대상으로 등록
+sections.forEach(section => {
+    sectionObserver.observe(section);
+});
     </script>
 
 </body>
