@@ -317,3 +317,4 @@ app-stock.com, 562114, RESELLER, ed8c126ea5971415
 appnexus.com, 17779, RESELLER
 media.net, 8CU355VS4, RESELLER
 anzu.io, 691e95644e633a6eee2567ee, RESELLER, 1c1b7acf4992136c
+google.com, pub-2778023283752566, DIRECT, f08c47fec0942fa0
