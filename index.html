@@ -4,551 +4,396 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MONOSPARK - Creative Game Studio</title>
+    <meta name="description" content="MONOSPARK 게임 스튜디오. Ash Crown, Deadline Factory, Mayor's Crush.">
+    <meta property="og:title" content="MONOSPARK">
+    <meta property="og:description" content="Ash Crown · Deadline Factory · Mayor's Crush">
+    <meta property="og:image" content="https://monospark.co.kr/ash-crown-feature.jpg">
     <style>
-        /* Contact 섹션이 짧더라도 하단에서 충분히 활성화될 수 있도록 최소 높이 확보 */
-#contact {
-    min-height: 80vh; /* 뷰포트 높이의 80% 만큼 최소 높이를 부여 */
-}
-        /* --- Reset & Base Styles --- */
         :root {
-            --bg-color: #050505; /* 더 깊은 어둠 */
-            --text-color: #eeeeee;
-            --accent-color: #FFD700; /* Electric Gold (Spark) */
-            --accent-glow: #FFA500;
-            --gray-text: #888888;
-            --card-bg: #111111;
+            --bg: #050505;
+            --text: #eeeeee;
+            --muted: #9a9a9a;
+            --accent: #FFD700;
+            --header-h: 68px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
+        html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Helvetica Neue', Arial, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.7;
             overflow-x: hidden;
         }
 
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
+        img { display: block; max-width: 100%; height: auto; }
 
         /* --- Header --- */
         header {
             position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 50px;
+            top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            padding: 0 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(5, 5, 5, 0.85);
+            background: rgba(5, 5, 5, 0.82);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.06);
         }
 
-        .logo {
-            font-size: 22px;
-            font-weight: 900; /* 더 굵게 */
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
+        .logo { font-size: 22px; font-weight: 900; letter-spacing: 3px; }
+        .logo span { color: var(--accent); }
 
-        .logo span { color: var(--accent-color); }
-
-        nav ul { display: flex; gap: 40px; }
-        nav a { font-size: 13px; font-weight: 600; color: var(--gray-text); text-transform: uppercase; letter-spacing: 1.5px; }
-        nav a:hover { color: var(--accent-color); }
-            /* 현재 활성화된 메뉴 항목 스타일 추가 */
-        nav a.active {
-            color: var(--accent-color);
-            font-weight: 700; /* 활성화 시 더 강조 */
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 5px; /* 밑줄을 위한 여백 */
+        nav ul { display: flex; gap: 32px; }
+        nav a {
+            font-size: 12px; font-weight: 700; color: var(--muted);
+            text-transform: uppercase; letter-spacing: 1.5px;
         }
-        /* --- Hero Section --- */
+        nav a:hover, nav a.active { color: var(--accent); }
+
+        /* --- Hero --- */
         .hero {
-            height: 100vh;
+            min-height: 62vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: flex-start;
-            padding: 0 12vw;
-            position: relative;
+            padding: calc(var(--header-h) + 60px) 12vw 70px;
         }
-
+        .hero .eyebrow {
+            color: var(--accent); font-size: 0.8rem; font-weight: 800;
+            letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px;
+        }
         .hero h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 30px;
-            color: #fff;
+            font-size: clamp(2.4rem, 6vw, 4.5rem);
+            font-weight: 800; line-height: 1.1; margin-bottom: 26px; color: #fff;
         }
-        
-        .hero h1 span {
-            color: var(--accent-color);
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3); /* 빛나는 효과 */
-        }
-
+        .hero h1 span { color: var(--accent); text-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
         .hero p {
-            font-size: 1.3rem;
-            color: var(--gray-text);
-            max-width: 650px;
-            margin-bottom: 50px;
-            border-left: 2px solid var(--accent-color);
-            padding-left: 25px;
-            font-weight: 300;
+            font-size: 1.15rem; color: var(--muted); max-width: 640px;
+            border-left: 2px solid var(--accent); padding-left: 22px; font-weight: 300;
         }
-
-        .scroll-down {
-            position: absolute;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            color: var(--gray-text);
-            animation: bounce 2s infinite;
+        .hero-games { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+        .hero-games a {
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1px;
+            padding: 9px 16px; border: 1px solid #333; color: #ddd;
         }
+        .hero-games a:hover { border-color: var(--accent); color: var(--accent); }
 
-        /* --- About Section --- */
-        .section { padding: 120px 12vw; }
-        
-        .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 60px;
-            color: #fff;
+        /* --- Game bands (full width, stacked vertically) --- */
+        .game {
             position: relative;
-            display: inline-block;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: var(--accent-color);
-        }
-        /* --- Email Copyable Style --- */
-.copyable-email {
-    color: var(--accent-color); /* 기본 색상을 강조색으로 설정 */
-    font-weight: bold; /* 강조 */
-    cursor: copy; /* 복사 가능함을 나타내는 커서 */
-    transition: 0.3s;
-    /* 호버 시 버튼처럼 색상 반전 효과를 위한 준비 */
-    padding: 2px 5px; /* 호버 영역을 명확히 하기 위해 약간의 패딩 추가 */
-    display: inline-block; /* 패딩 적용을 위해 필요 */
-    border-bottom: 1px solid transparent; /* 밑줄 효과를 부드럽게 추가 */
-}
-
-.copyable-email:hover {
-    color: #000; /* 호버 시 텍스트 색상을 어둡게 */
-    background: var(--accent-color); /* 배경색을 강조색으로 변경 */
-    border-bottom-color: var(--accent-color); /* 밑줄도 강조색으로 */
-}
-
-/* --- Toast Notification Style --- */
-.toast-message {
-    visibility: hidden; /* 기본적으로 숨김 */
-    min-width: 250px;
-    background-color: var(--accent-color);
-    color: #000;
-    text-align: center;
-    border-radius: 4px;
-    padding: 16px;
-    position: fixed;
-    z-index: 1001;
-    left: 50%;
-    bottom: 50px;
-    transform: translateX(-50%);
-    font-size: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    transition: opacity 0.5s, visibility 0.5s;
-}
-
-.toast-message.show {
-    visibility: visible;
-    opacity: 1;
-}
-
-        /* 부모 컨테이너를 기준으로 잡음 */
-.about-grid {
-    position: relative; /* 자식 요소들의 기준점 */
-    overflow: hidden;   /* 이미지가 튀어나가지 않게 */
-    padding: 40px;      /* 텍스트 여백 확보 */
-    /* 기존 grid 설정이 있다면 유지하거나 상황에 따라 display: block으로 변경 고려 */
-}
-
-/* 이미지를 배경으로 배치 */
-.about-img {
-    position: absolute; /* 둥둥 띄움 */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* 정중앙 배치 */
-    width: 100%;        /* 혹은 300px 등 원하는 크기로 고정 가능 */
-    max-width: 500px;   /* 너무 커지지 않게 제한 */
-    z-index: 0;         /* 가장 뒤로 보냄 */
-    opacity: 0.5;       /* ★중요: 투명도를 낮춰서 글자가 잘 보이게 함 */
-    pointer-events: none; /* 마우스 클릭이 글자에 방해되지 않게 함 */
-}
-
-/* 이미지가 부모(.about-img) 크기에 맞춰지도록 */
-.about-visual-image {
-    width: 100%;
-    height: auto;
-}
-
-/* 텍스트를 앞으로 가져옴 */
-.about-text {
-    position: relative; /* z-index 적용을 위해 필요 */
-    z-index: 1;         /* 이미지보다 위에 배치 */
-    text-align: center; /* 텍스트 중앙 정렬 (선택사항) */
-}
-
-        .about-text h3 { 
-            font-size: 2rem; 
-            margin-bottom: 30px; 
-            line-height: 1.4;
-        }
-        
-        .about-text p { 
-            color: var(--gray-text); 
-            margin-bottom: 20px; 
-            font-size: 1.05rem;
-        }
-
-        /* --- Projects Section --- */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-        }
-
-        .project-card {
-            background: var(--card-bg);
-            border: 1px solid #222;
-            padding: 40px;
-            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-        }
-
-        .project-card:hover {
-            transform: translateY(-15px);
-            border-color: var(--accent-color);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.1);
-        }
-
-        .project-card h3 { margin: 15px 0 10px; font-size: 1.6rem; }
-
-        .project-feature-image {
-            display: block;
             width: 100%;
-            height: auto;
-            margin-bottom: 6px;
-        }
-
-        .project-store-link {
-            display: inline-block;
-            margin-top: 10px;
-            max-width: 100%;
-        }
-
-        .project-store-link img {
-            display: block;
-            width: 160px;
-            max-width: 100%;
-            height: auto;
-        }
-        
-        .project-card .number {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #222;
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            transition: 0.3s;
-        }
-        
-        .project-card:hover .number { color: var(--accent-color); opacity: 0.2; }
-
-        .project-card .tag {
-            display: inline-block;
-            color: var(--accent-color);
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* --- Contact Section --- */
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-        }
-
-        .contact-info p { color: var(--gray-text); margin-bottom: 10px; }
-        .contact-info h4 { font-size: 1.5rem; margin-bottom: 30px; color: #fff; }
-
-        .contact-form {
+            min-height: 88vh;
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            align-items: center;
+            overflow: hidden;
+            isolation: isolate;
+            border-top: 1px solid #151515;
+        }
+        .game-bg {
+            position: absolute; inset: 0; z-index: -2;
+            background-size: cover; background-position: center;
+            filter: blur(28px) saturate(1.2);
+            transform: scale(1.15);
+            opacity: 0.45;
+        }
+        .game::after {
+            content: ''; position: absolute; inset: 0; z-index: -1;
+            background: linear-gradient(90deg, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.55) 55%, rgba(5,5,5,0.85) 100%);
+        }
+        .game.reverse::after {
+            background: linear-gradient(270deg, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.55) 55%, rgba(5,5,5,0.85) 100%);
         }
 
-        input, textarea {
-            background: #0f0f0f;
-            border: 1px solid #333;
-            padding: 15px;
-            color: #fff;
-            font-size: 1rem;
-            transition: 0.3s;
+        .game-inner {
+            width: 100%;
+            padding: 100px 8vw;
+            display: grid;
+            grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+            gap: 6vw;
+            align-items: center;
+        }
+        .game.reverse .game-media { order: 2; }
+
+        .game-media img {
+            width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
         }
 
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            background: #151515;
+        .game-number {
+            font-size: 0.85rem; font-weight: 900; letter-spacing: 3px;
+            color: var(--game-accent); margin-bottom: 14px;
+        }
+        .game h2 {
+            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+            line-height: 1.05; font-weight: 900; color: #fff; margin-bottom: 10px;
+        }
+        .game .tagline {
+            font-size: 1.15rem; font-weight: 700; color: var(--game-accent); margin-bottom: 22px;
+        }
+        .game .desc { color: #c8c8c8; font-size: 1.02rem; margin-bottom: 26px; max-width: 520px; }
+
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+        .chips span {
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            padding: 5px 11px; border-radius: 999px;
+            border: 1px solid color-mix(in srgb, var(--game-accent) 50%, transparent);
+            color: var(--game-accent);
         }
 
-        button {
-            background: transparent;
-            color: var(--accent-color);
-            border: 1px solid var(--accent-color);
-            padding: 15px 40px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            align-self: flex-start;
-            margin-top: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+        .store-badge img { width: 170px; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 14px 26px; font-weight: 800; letter-spacing: 1px;
+            background: var(--game-accent); color: #111; border-radius: 4px;
         }
+        .btn:hover { filter: brightness(1.1); box-shadow: 0 0 24px color-mix(in srgb, var(--game-accent) 50%, transparent); }
 
-        button:hover {
-            background: var(--accent-color);
-            color: #000;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        #ash-crown { --game-accent: #ff5a3c; }
+        #deadline-factory { --game-accent: #f2a03d; }
+        #mayors-crush { --game-accent: #8fd3ff; }
+
+        /* Mayor's Crush collage */
+        .mc-collage { position: relative; }
+        .mc-collage .island { width: 86%; margin-left: 7%; border-radius: 24px; }
+        .mc-collage .face {
+            position: absolute; width: 30%; border-radius: 50%;
+            border: 4px solid #fff; box-shadow: 0 16px 40px rgba(0,0,0,0.5);
         }
+        .mc-collage .face.a { left: 0; bottom: 4%; }
+        .mc-collage .face.b { right: 0; top: 6%; }
+
+        /* --- Contact --- */
+        .section { padding: 120px 12vw; border-top: 1px solid #151515; }
+        .section-title {
+            font-size: 1.8rem; margin-bottom: 50px; color: #fff;
+            position: relative; display: inline-block;
+        }
+        .section-title::after {
+            content: ''; position: absolute; bottom: -10px; left: 0;
+            width: 40px; height: 2px; background: var(--accent);
+        }
+        .contact-info h4 { font-size: 1.5rem; margin-bottom: 24px; color: #fff; }
+        .contact-info p { color: var(--muted); margin-bottom: 10px; }
+
+        .copyable-email {
+            color: var(--accent); font-weight: bold; cursor: copy;
+            padding: 2px 5px; display: inline-block;
+        }
+        .copyable-email:hover { color: #000; background: var(--accent); }
+
+        .toast-message {
+            visibility: hidden; min-width: 250px;
+            background: var(--accent); color: #000; text-align: center;
+            border-radius: 4px; padding: 16px;
+            position: fixed; z-index: 1001; left: 50%; bottom: 50px;
+            transform: translateX(-50%);
+            opacity: 0; transition: opacity 0.5s, visibility 0.5s;
+        }
+        .toast-message.show { visibility: visible; opacity: 1; }
 
         footer {
-            padding: 60px 12vw;
+            padding: 50px 12vw 60px;
             border-top: 1px solid #222;
-            text-align: center;
-            color: #555;
-            font-size: 0.85rem;
+            text-align: center; color: #555; font-size: 0.85rem;
+        }
+        .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 18px; }
+        .footer-links a { color: #888; }
+        .footer-links a:hover { color: var(--accent); }
+
+        /* reveal */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .reveal.in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .reveal { opacity: 1; transform: none; transition: none; }
         }
 
-        /* --- Mobile Responsive --- */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .about-grid { grid-template-columns: 1fr; gap: 40px; }
-            .contact-container { grid-template-columns: 1fr; }
-            header { padding: 20px; }
-            nav { display: none; }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
-            40% {transform: translateY(-10px) translateX(-50%);}
-            60% {transform: translateY(-5px) translateX(-50%);}
+        /* --- Mobile --- */
+        @media (max-width: 860px) {
+            header { padding: 0 16px; }
+            nav ul { gap: 16px; }
+            nav li.hide-sm { display: none; }
+            .hero { padding: calc(var(--header-h) + 40px) 16px 50px; min-height: 0; }
+            .game { min-height: 0; }
+            .game-inner { grid-template-columns: 1fr; padding: 70px 16px; gap: 34px; }
+            .game.reverse .game-media { order: 0; }
+            .game::after, .game.reverse::after { background: rgba(5,5,5,0.78); }
+            .section { padding: 80px 16px; }
+            footer { padding: 40px 16px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">MONO<span>SPARK</span></div>
+        <a href="#home" class="logo">MONO<span>SPARK</span></a>
         <nav>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">Philosophy</a></li>
-                <li><a href="#projects">Work</a></li>
+                <li><a href="#games">Games</a></li>
+                <li class="hide-sm"><a href="#ash-crown">Ash Crown</a></li>
+                <li class="hide-sm"><a href="#deadline-factory">Deadline Factory</a></li>
+                <li class="hide-sm"><a href="#mayors-crush">Mayor's Crush</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <section id="home" class="hero">
+        <div class="eyebrow">Creative Game Studio</div>
         <h1>A Single Spark,<br><span>Illuminating</span> the Unknown.</h1>
         <p>
             한 번의 반짝임이 미지의 공간을 밝히듯,<br>
             우리는 찰나의 영감을 놓치지 않고 새로운 세계를 만듭니다.
         </p>
-        <div class="scroll-down">SCROLL TO EXPLORE</div>
+        <div class="hero-games" id="games">
+            <a href="#ash-crown">Ash Crown</a>
+            <a href="#deadline-factory">Deadline Factory</a>
+            <a href="#mayors-crush">Mayor's Crush</a>
+        </div>
     </section>
 
-    <section id="about" class="section">
-        <h2 class="section-title">Our Philosophy</h2>
-        <div class="about-grid">
-            <div class="about-img">
-                <img src="explosion.png" alt="Explosion Visual" class="about-visual-image">
+    <!-- 01 Ash Crown -->
+    <section id="ash-crown" class="game">
+        <div class="game-bg" style="background-image:url('ash-crown-feature.jpg')"></div>
+        <div class="game-inner">
+            <div class="game-media reveal">
+                <img src="ash-crown-feature.jpg" alt="Ash Crown의 캐릭터와 불타는 전장" width="1024" height="500" loading="lazy">
             </div>
-            <div class="about-text">
-                <h3>"Capturing the Flash of Genius"</h3>
-                <p>
-                    <strong>MONOSPARK</strong> symbolizes the moment of ignition. Just as a single spark can light up a dark void, we believe that one fleeting idea has the power to change the world of gaming.
+            <div class="game-text reveal">
+                <div class="game-number">01 — STRATEGY</div>
+                <h2>Ash Crown</h2>
+                <div class="tagline">잿더미 위에서 왕관을 차지하라.</div>
+                <p class="desc">
+                    불타버린 대륙, 남은 것은 폐허와 전쟁뿐. 기지를 세우고 군대를 키워
+                    적의 거점을 무너뜨리고, 잿빛 왕좌의 주인이 되세요.
                 </p>
-                <p>
-                    모노스파크는 '점화'의 순간을 상징합니다. 어둠을 가르는 한 번의 불꽃처럼, 우리는 스쳐 지나가는 작은 아이디어 하나가 게임이라는 거대한 세계를 밝힐 수 있다고 믿습니다. 그 번뜩임을 놓치지 않고, 당신의 마음에 남을 경험으로 만들어 냅니다.
-                </p>
+                <div class="chips"><span>Android</span><span>Strategy</span><span>Base Building</span></div>
+                <div class="actions">
+                    <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.monospark.ashcrown" target="_blank" rel="noopener">
+                        <img src="googleplay.png" alt="Google Play에서 Ash Crown 받기" width="360" height="137">
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="section">
-        <h2 class="section-title">Selected Works</h2>
-        <div class="project-grid">
-            <div class="project-card">
-                <div class="number">01</div>
-                <span class="tag">Android</span>
-                <h3>Ash Crown</h3>
-                <img class="project-feature-image" src="ash-crown-feature.jpg" alt="Ash Crown의 캐릭터와 전장" width="1024" height="500" loading="lazy">
-                <a class="project-store-link" href="https://play.google.com/store/apps/details?id=com.monospark.ashcrown">
-                    <img src="googleplay.png" alt="Google Play에서 Ash Crown 보기" width="360" height="137">
-                </a>
+    <!-- 02 Deadline Factory -->
+    <section id="deadline-factory" class="game reverse">
+        <div class="game-bg" style="background-image:url('img/deadline-factory-feature.jpg')"></div>
+        <div class="game-inner">
+            <div class="game-media reveal">
+                <img src="img/deadline-factory-feature.jpg" alt="Deadline Factory 로고와 폐허 속 생존자" width="1024" height="500" loading="lazy">
             </div>
-            <div class="project-card">
-                <div class="number">02</div>
-                <span class="tag">Prototype</span>
-                <h3>Spark One</h3>
-                <p>어둠 속에서 빛을 찾아가는 여정. MONOSPARK의 철학이 담긴 실험적인 퍼즐 어드벤처.</p>
+            <div class="game-text reveal">
+                <div class="game-number">02 — SURVIVAL · AUTOMATION</div>
+                <h2>Deadline Factory</h2>
+                <div class="tagline">생산하고, 막아내고, 탐색하라.</div>
+                <p class="desc">
+                    지하 탄약 공장을 세우고, 몰려오는 좀비로부터 쉘터를 지키고,
+                    폐허에서 살아남을 기술을 찾아오세요. 공장 자동화와 타워 디펜스,
+                    탐색이 하나로 이어진 도트 서바이벌.
+                </p>
+                <div class="chips"><span>Android</span><span>Pixel Art</span><span>Tower Defense</span></div>
+                <div class="actions">
+                    <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.monospark.deadlinefactory" target="_blank" rel="noopener">
+                        <img src="googleplay.png" alt="Google Play에서 Deadline Factory 받기" width="360" height="137">
+                    </a>
+                </div>
             </div>
-            <div class="project-card">
-                <div class="number">03</div>
-                <span class="tag">Coming Soon</span>
-                <h3>Project X</h3>
-                <p>우리가 발견한 새로운 불꽃. 아직 공개되지 않은 차기작을 준비하고 있습니다.</p>
+        </div>
+    </section>
+
+    <!-- 03 Mayor's Crush -->
+    <section id="mayors-crush" class="game">
+        <div class="game-bg" style="background-image:url('img/mayors-crush-island.jpg')"></div>
+        <div class="game-inner">
+            <div class="game-media reveal">
+                <div class="mc-collage">
+                    <img class="island" src="img/mayors-crush-island.jpg" alt="Mayor's Crush의 작은 도시 섬" width="900" height="900" loading="lazy">
+                    <img class="face a" src="img/mayors-crush-hana.jpg" alt="셀럽 캐릭터 하나" width="360" height="360" loading="lazy">
+                    <img class="face b" src="img/mayors-crush-jun.jpg" alt="셀럽 캐릭터 준" width="360" height="360" loading="lazy">
+                </div>
+            </div>
+            <div class="game-text reveal">
+                <div class="game-number">03 — CITY BUILDING</div>
+                <h2>Mayor's Crush</h2>
+                <div class="tagline">도시를 키우면, 셀럽이 찾아온다.</div>
+                <p class="desc">
+                    시장이 되어 작은 마을을 반짝이는 도시로 키워 보세요. 집과 가게,
+                    랜드마크를 짓고 도시를 찾아온 셀럽들과 추억을 쌓아 가는 도시 경영 게임.
+                </p>
+                <div class="chips"><span>Web</span><span>City Building</span><span>Coming Soon</span></div>
+                <div class="actions">
+                    <a class="btn" href="mayors-crush/">웹에서 플레이 →</a>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="contact" class="section">
         <h2 class="section-title">Get in Touch</h2>
-        <div class="contact-container">
-            <div class="contact-info">
-                <h4>Let's spark something together.</h4>
-                <p>협업 제안이나 게임에 대한 피드백은 언제나 환영합니다.</p>
-                <br>
-                <p><strong>Email:</strong> <span id="emailToCopy" class="copyable-email">zaford@monospk.com</span></p>
-                <p><strong>Location:</strong> GoYang-Si ,Republic of Korea</p>
-            </div>
+        <div class="contact-info">
+            <h4>Let's spark something together.</h4>
+            <p>협업 제안이나 게임에 대한 피드백은 언제나 환영합니다.</p>
+            <br>
+            <p><strong>Email:</strong> <span id="emailToCopy" class="copyable-email">zaford@monospk.com</span></p>
+            <p><strong>Location:</strong> GoYang-Si, Republic of Korea</p>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 MONOSPARK. All rights reserved. <br>Designed with passion for gaming.</p>
+        <div class="footer-links">
+            <a href="personals.html">개인정보 처리방침</a>
+            <a href="usages.html">이용약관</a>
+            <a href="removeaccount.html">계정삭제 / Account Deletion</a>
+        </div>
+        <p>&copy; 2026 MONOSPARK. All rights reserved.</p>
     </footer>
 
+    <div id="copyToast" class="toast-message">이메일 주소가 복사되었습니다!</div>
+
     <script>
-        // Smooth Scroll Script
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // Reveal on scroll
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Email copy + toast
+        const emailEl = document.getElementById('emailToCopy');
+        const toastEl = document.getElementById('copyToast');
+        emailEl.addEventListener('click', () => {
+            if (!navigator.clipboard) return;
+            navigator.clipboard.writeText(emailEl.textContent).then(() => {
+                toastEl.classList.add('show');
+                setTimeout(() => toastEl.classList.remove('show'), 3000);
             });
         });
 
-        // Reveal Animation on Scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        });
-
-        document.querySelectorAll('.project-card, .about-text').forEach((el) => {
-            el.style.opacity = 0;
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)';
-            observer.observe(el);
-        });
-
-        /* --- Email Copy & Toast Functionality --- */
-
-        // 1. Toast 알림 메시지 HTML을 body에 추가합니다.
-        document.body.insertAdjacentHTML('beforeend', '<div id="copyToast" class="toast-message">이메일 주소가 복사되었습니다!</div>');
-
-        const emailElement = document.getElementById('emailToCopy');
-        const toastElement = document.getElementById('copyToast');
-
-        // 2. 복사 기능 함수
-        function copyTextToClipboard(text) {
-            if (!navigator.clipboard) {
-                // 구형 브라우저를 위한 대체 방법 (사용하지 않음)
-                return;
-            }
-            navigator.clipboard.writeText(text).then(() => {
-                showToast();
-            }).catch(err => {
-                console.error('클립보드 복사 실패: ', err);
-            });
+        // Nav highlight
+        const navLinks = document.querySelectorAll('header nav a');
+        const sections = [...document.querySelectorAll('section[id]')];
+        function updateNav() {
+            const atBottom = innerHeight + scrollY >= document.documentElement.scrollHeight - 4;
+            const line = scrollY + innerHeight * 0.35;
+            let current = sections[0].id;
+            sections.forEach(s => { if (s.offsetTop <= line) current = s.id; });
+            if (atBottom) current = sections[sections.length - 1].id;
+            navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
         }
-
-        // 3. Toast 메시지 표시 함수
-        function showToast() {
-            // 'show' 클래스를 추가하여 보이게 합니다.
-            toastElement.classList.add('show');
-            
-            // 3초 후 'show' 클래스를 제거하여 사라지게 합니다.
-            setTimeout(() => {
-                toastElement.classList.remove('show');
-            }, 3000);
-        }
-
-        // 4. 이메일 요소에 클릭 이벤트 리스너를 추가합니다.
-        if (emailElement) {
-            emailElement.addEventListener('click', function() {
-                const email = this.textContent;
-                copyTextToClipboard(email);
-            });
-        }
-      /* --- Section Intersection Observer for Navigation Highlight --- */
-
-// 1. 모든 섹션과 네비게이션 링크를 가져옵니다.
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('header nav ul li a');
-
-// 2. Observer 설정 (rootMargin: 뷰포트의 상단에서 20% 지점에 교차점이 발생하도록 설정)
-const observerOptions = {
-    root: null, // 뷰포트를 기준으로 관찰
-    rootMargin: '0px 0px -80% 0px', // 뷰포트 상단에서 20% 지점 (헤더 크기를 고려하여 하단 마진을 80%로 설정)
-    threshold: 0.1 // 섹션의 10%만 보여도 감지 시작
-};
-
-// 3. Observer 콜백 함수 정의
-const sectionObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            // 현재 활성화된 섹션의 ID (예: #about)
-            const currentSectionId = entry.target.id;
-
-            // 모든 링크에서 'active' 클래스 제거
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-
-            // 현재 섹션에 해당하는 링크에만 'active' 클래스 추가
-            const activeLink = document.querySelector(`header nav ul li a[href="#${currentSectionId}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-        }
-    });
-}, observerOptions);
-
-// 4. 모든 섹션을 관찰 대상으로 등록
-sections.forEach(section => {
-    sectionObserver.observe(section);
-});
+        addEventListener('scroll', updateNav, { passive: true });
+        updateNav();
     </script>
 
 </body>
