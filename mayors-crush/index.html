@@ -8,18 +8,9 @@
     <style>
         html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
         iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
-        .home {
-            position: fixed; top: max(10px, env(safe-area-inset-top)); left: 10px; z-index: 10;
-            font: 700 12px/1 'Helvetica Neue', Arial, sans-serif; letter-spacing: 2px;
-            color: #fff; text-decoration: none; padding: 8px 12px;
-            background: rgba(0,0,0,0.45); border-radius: 999px; opacity: 0.55;
-        }
-        .home:hover { opacity: 1; }
-        .home span { color: #FFD700; }
     </style>
 </head>
 <body>
-    <a class="home" href="/" title="MONOSPARK 홈으로">MONO<span>SPARK</span></a>
     <!-- 게임 본체는 Cloudflare Pages(mayors-crush.pages.dev)에 있고, 이 주소에서는 전체 화면으로 감싸서 보여 줍니다. -->
     <iframe src="https://mayors-crush.pages.dev/" title="Mayor's Crush"
             allow="fullscreen; autoplay; gamepad; clipboard-write"
